@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ETVS Cafe</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        h1 {
+            font-size: 48px;
+        }
+
+        img {
+            width: auto;
+            height: 800px;
+            margin-top: -15px;
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 24px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .button-main {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            margin-top: 20px;
+        }
+        .button-takeout {
+            background-color: #008CBA; /* Blue */
+            color: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ETVS Cafe</h1>
+    <img src="{{ url_for('static', filename='images/아메리카노.jpg') }}" alt="커피">
+    <div class="buttons">
+        <form action="/main" method="get">
+            <button type="submit" class="button button-main">매장</button>
+        </form>
+        <form action="/takeout" method="get">
+            <button type="submit" class="button button-takeout">포장</button>
+        </form>
+    </div>
+</body>
+</html>

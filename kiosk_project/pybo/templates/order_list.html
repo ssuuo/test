@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>주문 목록</title>
+</head>
+<body>
+    <h1>주문 목록</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>주문 번호</th>
+                <th>상태</th>
+                <th>주문 항목</th>
+                <th>수량</th>
+                <th>온도</th>
+                <th>주문 시간</th>
+                <th>동작</th> <!-- 완료 버튼을 추가하기 위한 열 -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.order_number }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.item }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.temperature }}</td>
+                <td>{{ order.timestamp }}</td>
+                <td>
+                    {% if order.status != "완료" %}
+                        <form method="POST" action="/complete/{{ order.order_number }}">
+                            <input type="submit" value="완료">
+                        </form>
+                        <form method="POST" action="/cancel/{{ order.order_number }}">
+                            <input type="submit" value="취소">
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form method="GET" action="/">
+        <input type="submit" value="메인 메뉴로 돌아가기">
+    </form>
+</body>
+</html>

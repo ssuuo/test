@@ -1,0 +1,140 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>카페 메뉴</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* 이미지를 2x2 그리드로 정렬하는 스타일 */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex; /* Flexbox를 사용하여 아이템을 가로로 정렬 */
+            flex-wrap: wrap; /* 아이템이 창 너비를 넘어갈 경우 줄 바꿈 */
+            justify-content: space-between; /* 아이템을 수평으로 분산 정렬 */
+        }
+        li {
+            flex: 1; /* 아이템의 크기를 동일하게 설정 (2x2 그리드를 위해) */
+            margin: 10px;
+            text-align: left;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: calc(50% - 20px); /* 2x2 그리드를 위해 가로 너비 설정 */
+        }
+        /* 이미지 크기 조정 */
+        li img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+
+
+</head>
+<body>
+    <h1>메 뉴</h1>
+        {% for item, info in menu.items() %} 
+        <li>
+            <img src="{{ url_for('static', filename='images/' + item.lower() + '.jpg') }}" alt="{{ item }}">
+            {{ item }} - {{ info['price'] }}원
+            재고: {{ info['stock'] }}개
+            <form method="POST" action="/order">
+                <input type="hidden" name="item" value="{{ item }}">
+                <input type="number" name="quantity" min="1" max="100">
+                <input type="submit" value="주문">
+                <label>Hot<input type="radio" name="temperature_{{ item }}" value="hot"></label>
+                <label>Iced<input type="radio" name="temperature_{{ item }}" value="iced"></label>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>주문 내역</h2>
+    <ul>
+        {% for order in orders %}
+            <li>{{ order.item }} - 수량: {{ order.quantity }}개, 온도: {{ order.temperature }}, <form method="POST" action="/orderlist">
+            </form></li>
+        {% endfor %}
+    </ul>
+
+    <h2>합계 금액</h2>
+    <p>{{ total_price }}원</p>
+    
+    <form method="GET" action="/cart">
+        <input type="submit" value="결제하기">
+    </form>
+
+    <a href="/orderlist">주문 내역 보기</a>
+</body>
+</html>  -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>카페 메뉴</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        h1 {
+            margin-top: 50px;
+        }
+        /* 그리드 스타일 */
+        ul {
+            list-style-type: none;
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 2x2 그리드 */
+            grid-gap: 20px; /* 그리드 간격 */
+        }
+        li {
+            text-align: center;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        /* 이미지 스타일 */
+        li img {
+            max-width: 100%;
+            height: auto;
+            display: block; /* 이미지를 블록 요소로 설정하여 수직으로 정렬 */
+            margin: 0 auto; /* 가운데 정렬 */
+        }
+    </style>
+</head>
+<body>
+    <h1>메 뉴</h1>
+    <ul>
+        {% for item, info in menu.items() %} 
+        <li>
+            <img src="{{ url_for('static', filename='images/' + item.lower() + '.jpg') }}" alt="{{ item }}">
+            {{ item }} - {{ info['price'] }}원
+            재고: {{ info['stock'] }}개
+            <form method="POST" action="/order">
+                <input type="hidden" name="item" value="{{ item }}">
+                <input type="number" name="quantity" min="1" max="100" value="0">
+                <input type="submit" value="주문">
+                <label>Hot<input type="radio" name="temperature_{{ item }}" value="hot" required></label>
+                <label>Iced<input type="radio" name="temperature_{{ item }}" value="iced" required></label>
+            </form>
+            
+        </li>
+        {% endfor %}
+    </ul>
+    <h2>주문 내역</h2>
+    <ul>
+        {% for order in orders %}
+            <li>{{ order.item }} - 수량: {{ order.quantity }}개, 온도: {{ order.temperature }}, <form method="POST" action="/orderlist">
+            </form></li>
+        {% endfor %}
+    </ul>
+
+    <h2>합계 금액</h2>
+    <p>{{ total_price }}원</p>
+    
+    <form method="GET" action="/cart">
+        <input type="submit" value="결제하기">
+    </form>
+
+    <a href="/orderlist">주문 내역 보기</a>
+</body>
+</html>

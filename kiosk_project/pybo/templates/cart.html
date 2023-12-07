@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>장바구니</title>
+    <script>
+        function cancelOrder() {
+            var orders = document.getElementById('orders');
+            orders.innerHTML = '';
+
+            var totalPrice = document.getElementById('totalPrice');
+            totalPrice.innerHTML = '총 결제 금액: 0원';
+        }
+    </script>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 50%;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1, h2 {
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        form {
+            display: inline-block;
+            margin-top: 10px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>장바구니</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>주문 번호</th>
+                <th>주문 항목</th>
+                <th>수량</th>
+                <th>온도</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.order_number }}</td>
+                <td>{{ order.item }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.temperature }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>총 결제 금액</h2>
+    <p>{{ total_price }}원</p>
+
+    <form method="POST" action="/clear_cart">
+        <input type="submit" value="장바구니 비우기">
+    </form>
+
+    <form method="GET" action="/orderlist_">
+        <input type="submit" value="카드결제">
+    </form>
+   
+
+</body>
+</html>
